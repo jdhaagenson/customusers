@@ -5,6 +5,10 @@ from django.db import models
 
 class CustomUser(AbstractUser):
 
-    Homepage = models.URLField(blank=True, null=True)
-    Age = models.IntegerField(blank=True, null=True)
+    display_name = models.CharField(max_length=100, required=True)
+    homepage = models.URLField(blank=True, null=True)
+    age = models.IntegerField(blank=True, null=True)
     REQUIRED_FIELDS = [Homepage, Age]
+
+    def __str__(self):
+        return self.display_name
