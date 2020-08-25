@@ -4,11 +4,12 @@ from .forms import SignupForm, LoginForm
 from django.shortcuts import render, HttpResponseRedirect, reverse
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth import login, logout, authenticate
+from custom_user.settings import AUTH_USER_MODEL
 
 
 @login_required
 def main(request):
-    pass
+    return render(request, 'main.html', {'auth_user_model': AUTH_USER_MODEL, 'user':request.user})
 
 
 def signup_form(request):
@@ -36,3 +37,15 @@ def login_form(request):
         if form.is_valid():
             data = form.cleaned_data
             user = authenticate(request, username=data.get('username'), password=data.get('password'))
+            if user:
+                login(request, user)
+                return HttpResponseRedirect(request.GET.get('next'), reverse('homepage'))
+    form = LoginForm()
+    return render(request, "loginpage.html", {'form': form})
+
+
+def logout_user(request):
+    logout(request)
+    return HttpResponseRedirect(reverse("homepage"))
+
+
