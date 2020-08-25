@@ -18,6 +18,7 @@ def signup_form(request):
         if form.is_valid():
             data = form.cleaned_data
             user = CustomUser.objects.create_user(
+                email=data.get('email'),
                 username=data.get('username'),
                 password=data.get('password'),
                 age=data.get('age'),
@@ -26,7 +27,8 @@ def signup_form(request):
             )
             user.save()
             if request.user.is_staff:
-                return HttpResponseRedirect(request.GET.get('next'), reverse('homepage'))
+                return HttpResponseRedirect(request.GET.get(next, reverse('homepage'))
+
     form = SignupForm()
     return render(request, 'signupform.html', {'form': form})
 
@@ -35,11 +37,18 @@ def login_form(request):
     if request.method == 'POST':
         form = LoginForm(request.POST)
         if form.is_valid():
-            data = form.cleaned_data
-            user = authenticate(request, username=data.get('username'), password=data.get('password'))
+            form.save()
+            username = form.cleaned_data.get('username')
+            raw_password = form.cleaned_data.get('password1')
+            user = authenticate(
+                request,
+                username=username,
+                password=raw_password
+            )
             if user:
                 login(request, user)
-                return HttpResponseRedirect(request.GET.get('next'), reverse('homepage'))
+                return HttpResponseRedirect(
+                    request.GET.get(next, reverse('homepage')))
     form = LoginForm()
     return render(request, "loginpage.html", {'form': form})
 
