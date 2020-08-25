@@ -116,4 +116,6 @@ STATIC_URL = '/static/'
 
 LOGIN_URL = '/loginpage/'
 
+LOGOUT_REDIRECT_URL = '/'
+
 AUTH_USER_MODEL = "user_app.CustomUser"
