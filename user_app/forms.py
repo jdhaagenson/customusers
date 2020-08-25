@@ -6,6 +6,7 @@ class SignupForm(forms.ModelForm):
     email = forms.EmailField(max_length=50, help_text="Required. Please enter valid email address")
     homepage = forms.URLField(required=False, help_text="Optional")
     age = forms.IntegerField(required=False, help_text="Optional")
+    password = forms.CharField(widget=forms.PasswordInput)
 
     class Meta:
         model = CustomUser
