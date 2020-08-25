@@ -1,14 +1,15 @@
 import django.forms as forms
-from django.contrib.auth.forms import UserCreationForm
 from .models import CustomUser
 
 
-class SignupForm(UserCreationForm):
+class SignupForm(forms.ModelForm):
     email = forms.EmailField(max_length=50, help_text="Required. Please enter valid email address")
+    homepage = forms.URLField(required=False, help_text="Optional")
+    age = forms.IntegerField(required=False, help_text="Optional")
 
     class Meta:
         model = CustomUser
-        fields = ("email", 'username', 'password', 'display_name', 'age', 'homepage')
+        fields = ("email", 'username', 'display_name', 'age', 'homepage', 'password')
 
 
 class LoginForm(forms.Form):

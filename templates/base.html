@@ -1,19 +1,16 @@
-<!DOCTYPE html>
-<html lang="en">
 
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Custom User</title>
-    <link rel="stylesheet" href="https://unpkg.com/purecss@2.0.3/build/pure-min.css" integrity="sha384-cg6SkqEOCV1NbJoCu11+bm0NvBRc8IYLRGXkmNrqUBfTjmMYwNKPWBTIKyw9mHNJ" crossorigin="anonymous">
-</head>
+{#{% block css %}#}
+{#    <link id="css" rel="stylesheet" href="https://unpkg.com/purecss@2.0.3/build/pure-min.css" integrity="sha384-cg6SkqEOCV1NbJoCu11+bm0NvBRc8IYLRGXkmNrqUBfTjmMYwNKPWBTIKyw9mHNJ" crossorigin="anonymous">#}
+{#{% endblock %}#}
 
-<body>
-    <div class="pure-menu pure-menu-horizontal">
+    <div id="menu" class="pure-menu pure-menu-horizontal">
         <a href="/"><button>Home</button></a>
         <a href="/loginpage/"><button>Login</button></a>
         <a href="/logout/"><button>Logout</button></a>
+        <a href="/signup/"><button>New User</button></a>
     </div>
-</body>
+{% block form %}{% endblock %}
+{% block main %}{% endblock %}
 
-</html>
+
+

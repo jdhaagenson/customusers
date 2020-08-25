@@ -9,12 +9,13 @@ from custom_user.settings import AUTH_USER_MODEL
 
 @login_required
 def main(request):
-    return render(request, 'main.html', {'auth_user_model': AUTH_USER_MODEL, 'user':request.user})
+    return render(request, 'main.html', {'auth_user_model': AUTH_USER_MODEL, 'user': request.user})
 
 
 def signup_form(request):
     if request.method == "POST":
         form = SignupForm(request.POST)
+        # breakpoint()
         if form.is_valid():
             data = form.cleaned_data
             user = CustomUser.objects.create_user(
@@ -25,32 +26,29 @@ def signup_form(request):
                 display_name=data.get('display_name'),
                 homepage=data.get('homepage')
             )
-            user.save()
-            if request.user.is_staff:
-                return HttpResponseRedirect(request.GET.get(next, reverse('homepage'))
-
+            return HttpResponseRedirect(request.GET.get('next', reverse('loginpage')))
     form = SignupForm()
-    return render(request, 'signupform.html', {'form': form})
+    return render(request, 'generic_form.html', {'form': form})
 
 
 def login_form(request):
     if request.method == 'POST':
         form = LoginForm(request.POST)
         if form.is_valid():
-            form.save()
             username = form.cleaned_data.get('username')
-            raw_password = form.cleaned_data.get('password1')
+            raw_password = form.cleaned_data.get('password')
             user = authenticate(
                 request,
                 username=username,
                 password=raw_password
             )
+            # breakpoint()
             if user:
                 login(request, user)
                 return HttpResponseRedirect(
-                    request.GET.get(next, reverse('homepage')))
+                    request.GET.get('next', reverse('homepage')))
     form = LoginForm()
-    return render(request, "loginpage.html", {'form': form})
+    return render(request, "generic_form.html", {'form': form})
 
 
 def logout_user(request):

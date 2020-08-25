@@ -1,12 +1,22 @@
 {% extends "./base.html" %}
-<div>
-    <p>
-        AUTH_USER_MODEL: {{ auth_user_model }}
-    </p>
-    <p>
-        Display Name: {{ user.display_name }}
-    </p>
-    <p>
-        Username: {{ user.username }}
-    </p>
-</div>
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Custom User</title>
+    {% block css %}{% endblock %}
+</head>
+<body>
+    {% block main %}
+    <div>
+
+        <p>
+            AUTH_USER_MODEL: {{ auth_user_model }}
+        </p>
+            <p><em>display_name: </em></p><h1>{{ user.display_name }}</h1>
+            <p><em>username: </em></p><h3>{{ user.username }}</h3>
+    </div>
+{% endblock %}
+</body>
